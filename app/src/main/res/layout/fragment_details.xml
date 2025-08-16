@@ -1,14 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.detailsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.atsScoreFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintWidth_max="450dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back_details_fragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Details Fragment" />
+        <LinearLayout
+            android:id="@+id/personal_details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-</FrameLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/personal_details"
+                android:layout_marginVertical="20sp"
+                android:textSize="60sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:minHeight="48sp" />
+
+            <EditText
+                android:id="@+id/input_of_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="name"
+                android:hint="@string/name"
+                android:layout_marginHorizontal="30sp"
+                android:layout_marginBottom="10sp"
+                android:inputType="text"
+                android:minHeight="48sp"/>
+
+            <EditText
+                android:id="@+id/input_of_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30sp"
+                android:layout_marginBottom="10sp"
+                android:autofillHints="phone"
+                android:hint="@string/contact_number"
+                android:inputType="phone"
+                android:minHeight="48sp"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/input_of_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30sp"
+                android:layout_marginBottom="10sp"
+                android:autofillHints="emailAddress"
+                android:hint="@string/email_address"
+                android:inputType="textEmailAddress"
+                android:minHeight="48sp"
+                tools:ignore="TextContrastCheck"/>
+
+            <EditText
+                android:id="@+id/input_of_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="postalAddress"
+                android:hint="@string/location"
+                android:layout_marginHorizontal="30sp"
+                android:layout_marginBottom="10sp"
+                android:inputType="textPostalAddress"
+                android:minHeight="48sp"/>
+
+            <EditText
+                android:id="@+id/input_of_linkedIn_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30sp"
+                android:layout_marginBottom="10sp"
+                android:hint="@string/linkedin_profile"
+                android:importantForAutofill="no"
+                android:inputType="textUri"
+                android:minHeight="48sp"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/input_of_github_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30sp"
+                android:layout_marginBottom="10sp"
+                android:autofillHints=""
+                android:hint="@string/github_profile"
+                android:inputType="textUri"
+                android:minHeight="48sp"
+                tools:ignore="TextContrastCheck" />
+        </LinearLayout>
+
+
+
+    </ScrollView>
+    <Button
+        android:id="@+id/btn_save_details_fragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/continue_"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_back_details_fragment"
+        android:layout_marginHorizontal="20sp"
+        app:layout_constraintWidth_max="200dp"/>
+
+    <Button
+        android:id="@+id/btn_back_details_fragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_save_details_fragment"
+        android:layout_marginHorizontal="20sp"
+        app:layout_constraintWidth_max="200dp"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
