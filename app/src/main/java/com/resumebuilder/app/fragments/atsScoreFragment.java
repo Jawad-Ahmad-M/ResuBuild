@@ -4,62 +4,66 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.resumebuilder.app.CustomViews.CircularATSScoreView;
 import com.resumebuilder.app.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link atsScoreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class atsScoreFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private int score;
+    private int newScore;
+    private CircularATSScoreView circularATSScoreView;
+    private TextView tvAtsScore;
     public atsScoreFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment atsScoreFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static atsScoreFragment newInstance(String param1, String param2) {
-        atsScoreFragment fragment = new atsScoreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ats_score, container, false);
+        View view = inflater.inflate(R.layout.fragment_ats_score, container, false);
+
+        score = 70;
+        newScore = score;
+        circularATSScoreView = view.findViewById(R.id.circular_ats_score_view);
+        tvAtsScore = view.findViewById(R.id.tv_ats_score);
+
+        display(score);
+
+
+        Button plus, minus, recheckAtsScore;
+        plus = view.findViewById(R.id.btn_plus_2);
+        minus = view.findViewById(R.id.btn_minus_2);
+        recheckAtsScore = view.findViewById(R.id.btn_rechecking_ats_score);
+
+
+        plus.setOnClickListener(v -> {
+            newScore = newScore + 2;
+            display(newScore);
+        });
+
+        minus.setOnClickListener(v -> {
+            newScore = newScore - 2;
+            display(newScore);
+        });
+
+        recheckAtsScore.setOnClickListener(v -> display(score));
+        return view;
+    }
+
+    private void display(int score){
+        circularATSScoreView.setScore(score);
+        String atsScore = "ATS Score\n" + score;
+        tvAtsScore.setText(atsScore);
     }
 }

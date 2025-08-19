@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary">#007BFF</color> <!-- Blue for accents/buttons -->
+    <color name="secondary">#6C757D</color> <!-- Gray for text -->
+    <color name="success">#28A745</color> <!-- Green for validation -->
+    <color name="error">#DC3545</color> <!-- Red for errors -->
+    <color name="background">#F8F9FA</color> <!-- Light gray base -->
 </resources>

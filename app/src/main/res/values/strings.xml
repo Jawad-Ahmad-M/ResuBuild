@@ -15,4 +15,22 @@
     <string name="back">Back</string>
     <string name="continue_">Continue</string>
     <string name="email_address">Email Address</string>
+    <string name="get_view">Get View</string>
+    <string name="back_button">Back Button</string>
+    <string name="ats_score">ATS SCORE</string>
+    <string name="experience">Experience</string>
+    <string name="university_name">University Name</string>
+    <string name="start_date">Start Date(MM/YYYY)</string>
+    <string name="end_date">End Date(MM/YYYY)</string>
+    <string name="title_of_degree">Title of Degree</string>
+    <string name="remove">Remove</string>
+    <string name="job_title">Job Title</string>
+    <string name="company">Company</string>
+    <string name="description">Description</string>
+    <string name="skill_name">Skill Name</string>
+    <string name="title_of_project">Title of Project</string>
+    <string name="organization">Organization</string>
+    <string name="name_of_certification">Name of Certification</string>
+    <string name="issuing_organization">Issuing Organization</string>
+    <string name="issued_date">Issued Date</string>
 </resources>
