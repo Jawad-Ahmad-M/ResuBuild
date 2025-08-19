@@ -33,4 +33,22 @@
     <string name="name_of_certification">Name of Certification</string>
     <string name="issuing_organization">Issuing Organization</string>
     <string name="issued_date">Issued Date</string>
+    <string name="enter_your_summary_here">Enter your summary here</string>
+    <string name="education">Education</string>
+    <string name="expand_education">Expand Education</string>
+    <string name="add_education">Add Education</string>
+    <string name="add_experience">Add Experience</string>
+    <string name="projects">Projects</string>
+    <string name="expand_projects">Expand Projects</string>
+    <string name="add_project">Add Project</string>
+    <string name="skills">Skills</string>
+    <string name="expand_skills">Expand Skills</string>
+    <string name="add_skill">Add Skill</string>
+    <string name="certifications">Certifications</string>
+    <string name="expand_certifications">Expand Certifications</string>
+    <string name="add_certification">Add Certification</string>
+    <string name="save">Save</string>
+    <string name="expand_summary">Expand Summary</string>
+    <string name="summary">Summary</string>
+    <string name="expand_personal_details">Expand Personal Details</string>
 </resources>
