@@ -1,9 +1,15 @@
 package com.resumebuilder.app.itemClasses;
 
-public class Education {
-    private String universityName, location, titleOfDegree, startDate, endDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 
-    public Education(String universityName, String location, String titleOfDegree, String startDate, String endDate) {
+public class Education {
+    private String universityName, location, titleOfDegree;
+    private YearMonth startDate, endDate;
+
+    public Education() {}
+
+    public Education(String universityName, String location, String titleOfDegree, YearMonth startDate, YearMonth endDate) {
         this.universityName = universityName;
         this.location = location;
         this.titleOfDegree = titleOfDegree;
@@ -27,6 +33,22 @@ public class Education {
         this.location = location;
     }
 
+    public String getStartDate() {
+        return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+    }
+
+    public void setStartDate(YearMonth startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+    }
+
+    public void setEndDate(YearMonth endDate) {
+        this.endDate = endDate;
+    }
+
     public String getTitleOfDegree() {
         return titleOfDegree;
     }
@@ -35,19 +57,4 @@ public class Education {
         this.titleOfDegree = titleOfDegree;
     }
 
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
 }
