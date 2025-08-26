@@ -1,62 +1,52 @@
 package com.resumebuilder.app.itemClasses;
 
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+
 public class Experience {
-    private String jobRole, location, startDate, endDate, companyName, jobDescription;
-    public Experience(String jobRole, String location, String startDate, String endDate, String companyName, String jobDescription) {
+    private String jobRole, location, companyName, jobDescription;
+    private YearMonth startDate, endDate;
+    public Experience() {}
+
+    public Experience(String jobRole, String location,YearMonth startDate, YearMonth endDate, String companyName, String jobDescription) {
         this.jobRole = jobRole;
         this.location = location;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.companyName = companyName;
         this.jobDescription = jobDescription;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public String getJobRole() {
         return jobRole;
     }
 
-    public void setJobRole(String jobRole) {
-        this.jobRole = jobRole;
-    }
-
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+        if (startDate != null){
+            return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+        } else {
+            return  "";
+        }
     }
 
     public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+        if (endDate != null) {
+            return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+        } else {
+            return "";
+        }
     }
 
     public String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
     public String getJobDescription() {
         return jobDescription;
     }
-
-    public void setJobDescription(String jobDescription) {
-        this.jobDescription = jobDescription;
-    }
-
 }
