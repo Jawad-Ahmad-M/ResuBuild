@@ -21,40 +21,29 @@ public class Education {
         return universityName;
     }
 
-    public void setUniversityName(String universityName) {
-        this.universityName = universityName;
-    }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getStartDate() {
-        return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
-    }
-
-    public void setStartDate(YearMonth startDate) {
-        this.startDate = startDate;
+        if (startDate != null){
+            return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+        } else {
+            return  "";
+        }
     }
 
     public String getEndDate() {
-        return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
-    }
-
-    public void setEndDate(YearMonth endDate) {
-        this.endDate = endDate;
+        if (endDate != null) {
+            return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+        } else {
+            return "";
+        }
     }
 
     public String getTitleOfDegree() {
         return titleOfDegree;
-    }
-
-    public void setTitleOfDegree(String titleOfDegree) {
-        this.titleOfDegree = titleOfDegree;
     }
 
 }

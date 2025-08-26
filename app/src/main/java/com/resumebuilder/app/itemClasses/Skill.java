@@ -12,8 +12,4 @@ public class Skill {
     public String getNameOfSkill() {
         return nameOfSkill;
     }
-
-    public void setNameOfSkill(String nameOfSkill) {
-        this.nameOfSkill = nameOfSkill;
-    }
 }

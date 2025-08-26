@@ -46,7 +46,7 @@ public class MainPageAdapter extends FragmentStateAdapter {
     }
 
     // Optional: expose fragment cache if needed
-    public Fragment getCachedFragment(int position) {
-        return fragmentCache[position];
-    }
+//    public Fragment getCachedFragment(int position) {
+//        return fragmentCache[position];
+//    }
 }
