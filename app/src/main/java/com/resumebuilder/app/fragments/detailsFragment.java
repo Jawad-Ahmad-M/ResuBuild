@@ -1,10 +1,14 @@
 package com.resumebuilder.app.fragments;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +34,14 @@ import java.util.List;
 
 public class detailsFragment extends Fragment {
 
+    private boolean isSectionPersonalVisible = true;
+    private boolean isSectionSummaryVisible  = true;
+    private boolean isSectionEducationVisible  = true;
+    private boolean isSectionExperienceVisible  = true;
+    private boolean isSectionProjectsVisible  = true;
+    private boolean isSectionSkillsVisible  = true;
+    private boolean isSectionCertificationVisible = true;
+
     private FragmentDetailsBinding binding;
     private final List<Education> educationList = new ArrayList<>();
     private final List<Experience> experienceList = new ArrayList<>();
@@ -40,6 +52,8 @@ public class detailsFragment extends Fragment {
     private EducationAdapter educationAdapter;
     private ExperienceAdapter experienceAdapter;
     private ProjectAdapter projectAdapter;
+    private SkillAdapter skillAdapter;
+    private CertificationAdapter certificationAdapter;
 
     public detailsFragment() {
         // Required empty public constructor
@@ -64,14 +78,100 @@ public class detailsFragment extends Fragment {
         educationAdapter = new EducationAdapter(educationList, requireContext());
         experienceAdapter = new ExperienceAdapter(experienceList, requireContext());
         projectAdapter = new ProjectAdapter(projectList, requireContext());
-        SkillAdapter skillAdapter = new SkillAdapter(skillList);
-        CertificationAdapter certificationAdapter = new CertificationAdapter(certificationList);
+        skillAdapter = new SkillAdapter(skillList);
+        certificationAdapter = new CertificationAdapter(certificationList);
+
+
+        binding.rvEducation.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.rvEducation.setAdapter(educationAdapter);
+
+        binding.rvExperience.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.rvExperience.setAdapter(experienceAdapter);
+
+        binding.rvProjects.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.rvProjects.setAdapter(projectAdapter);
+
+        binding.rvSkills.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.rvSkills.setAdapter(skillAdapter);
+
+        binding.rvCertifications.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.rvCertifications.setAdapter(certificationAdapter);
+
+        loadEducationData();
+        loadExperienceData();
+        loadProjectData();
+        loadSkillData();
+        loadCertificationData();
+
+        setFirstView();
+
 
         binding.btnGetView.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), testActivity.class);
             intent.putExtra("pdf_assets", "RenderCV_sb2nov_Theme.pdf");
             startActivity(intent);
         });
+
+
+        binding.btnExpandPersonal.setOnClickListener(v -> {
+            isSectionPersonalVisible = !isSectionPersonalVisible;
+            binding.contentPersonal.setVisibility(
+                    isSectionPersonalVisible ? VISIBLE : View.GONE
+            );
+            setViewsVisibility(binding.btnExpandPersonal);
+        });
+
+        binding.btnExpandSummary.setOnClickListener(v -> {
+            isSectionSummaryVisible = !isSectionSummaryVisible;
+            binding.contentSummary.setVisibility(
+                    isSectionSummaryVisible ? VISIBLE : View.GONE
+            );
+            setViewsVisibility(binding.btnExpandSummary);
+        });
+
+        binding.btnExpandEducation.setOnClickListener(v -> {
+            isSectionEducationVisible = !isSectionEducationVisible;
+            binding.contentEducation.setVisibility(
+                    isSectionEducationVisible ? VISIBLE : View.GONE
+            );
+            setViewsVisibility(binding.btnExpandEducation);
+        });
+
+        binding.btnExpandExperience.setOnClickListener(v -> {
+            isSectionExperienceVisible = !isSectionExperienceVisible;
+            binding.contentExperience.setVisibility(
+                    isSectionExperienceVisible ? VISIBLE : View.GONE
+            );
+            setViewsVisibility(binding.btnExpandExperience);
+        });
+
+        binding.btnExpandProjects.setOnClickListener(v -> {
+            isSectionProjectsVisible = !isSectionProjectsVisible;
+            binding.contentProjects.setVisibility(
+                    isSectionProjectsVisible ? VISIBLE : View.GONE
+            );
+            setViewsVisibility(binding.btnExpandProjects);
+        });
+
+
+        binding.btnExpandSkills.setOnClickListener(v -> {
+            isSectionSkillsVisible = !isSectionSkillsVisible;
+            binding.contentSkills.setVisibility(
+                    isSectionSkillsVisible ? VISIBLE : View.GONE
+            );
+            setViewsVisibility(binding.btnExpandSkills);
+        });
+
+
+        binding.btnExpandCertifications.setOnClickListener(v -> {
+            isSectionCertificationVisible = !isSectionCertificationVisible;
+            binding.contentCertifications.setVisibility(
+                    isSectionCertificationVisible ? VISIBLE : View.GONE
+            );
+            setViewsVisibility(binding.btnExpandCertifications);
+        });
+
+
 
 //        EditText name = view.findViewById(R.id.et_name);
 //        EditText location = view.findViewById(R.id.et_location);
@@ -106,26 +206,83 @@ public class detailsFragment extends Fragment {
             certificationAdapter.notifyItemInserted(certificationList.size() - 1);
         });
 
-        binding.rvEducation.setLayoutManager(new LinearLayoutManager(requireContext()));
-        loadEducationData();
 
-        binding.rvExperience.setLayoutManager(new LinearLayoutManager(requireContext()));
-        loadExperienceData();
+    }
 
-        binding.rvProjects.setLayoutManager(new LinearLayoutManager(requireContext()));
-        loadProjectData();
+    private void setFirstView() {
+        binding.contentPersonal.setVisibility(VISIBLE);
+        binding.contentSummary.setVisibility(GONE);
+        binding.contentEducation.setVisibility(GONE);
+        binding.contentExperience.setVisibility(GONE);
+        binding.contentProjects.setVisibility(GONE);
+        binding.contentSkills.setVisibility(GONE);
+        binding.contentCertifications.setVisibility(GONE);
+    }
+    private void setViewsVisibility(ImageButton btn) {
+        if (btn == binding.btnExpandPersonal){
+            binding.contentPersonal.setVisibility(VISIBLE);
+            binding.contentSummary.setVisibility(GONE);
+            binding.contentEducation.setVisibility(GONE);
+            binding.contentExperience.setVisibility(GONE);
+            binding.contentProjects.setVisibility(GONE);
+            binding.contentSkills.setVisibility(GONE);
+            binding.contentCertifications.setVisibility(GONE);
+        }
+        else if (btn == binding.btnExpandSummary){
+            binding.contentPersonal.setVisibility(GONE);
+            binding.contentSummary.setVisibility(VISIBLE);
+            binding.contentEducation.setVisibility(GONE);
+            binding.contentExperience.setVisibility(GONE);
+            binding.contentProjects.setVisibility(GONE);
+            binding.contentSkills.setVisibility(GONE);
+            binding.contentCertifications.setVisibility(GONE);
+        }
+        else if (btn == binding.btnExpandEducation){
+            binding.contentPersonal.setVisibility(GONE);
+            binding.contentSummary.setVisibility(GONE);
+            binding.contentEducation.setVisibility(VISIBLE);
+            binding.contentExperience.setVisibility(GONE);
+            binding.contentProjects.setVisibility(GONE);
+            binding.contentSkills.setVisibility(GONE);
+            binding.contentCertifications.setVisibility(GONE);
+        }
+        else if (btn == binding.btnExpandExperience){
+            binding.contentPersonal.setVisibility(GONE);
+            binding.contentSummary.setVisibility(GONE);
+            binding.contentEducation.setVisibility(GONE);
+            binding.contentExperience.setVisibility(VISIBLE);
+            binding.contentProjects.setVisibility(GONE);
+            binding.contentSkills.setVisibility(GONE);
+            binding.contentCertifications.setVisibility(GONE);
+        }
+        else if (btn == binding.btnExpandProjects){
+            binding.contentPersonal.setVisibility(GONE);
+            binding.contentSummary.setVisibility(GONE);
+            binding.contentEducation.setVisibility(GONE);
+            binding.contentExperience.setVisibility(GONE);
+            binding.contentProjects.setVisibility(VISIBLE);
+            binding.contentSkills.setVisibility(GONE);
+            binding.contentCertifications.setVisibility(GONE);
+        }
+        else if (btn == binding.btnExpandSkills){
+            binding.contentPersonal.setVisibility(GONE);
+            binding.contentSummary.setVisibility(GONE);
+            binding.contentEducation.setVisibility(GONE);
+            binding.contentExperience.setVisibility(GONE);
+            binding.contentProjects.setVisibility(GONE);
+            binding.contentSkills.setVisibility(VISIBLE);
+            binding.contentCertifications.setVisibility(GONE);
+        }
+        else if (btn == binding.btnExpandCertifications){
+            binding.contentPersonal.setVisibility(GONE);
+            binding.contentSummary.setVisibility(GONE);
+            binding.contentEducation.setVisibility(GONE);
+            binding.contentExperience.setVisibility(GONE);
+            binding.contentProjects.setVisibility(GONE);
+            binding.contentSkills.setVisibility(GONE);
+            binding.contentCertifications.setVisibility(VISIBLE);
+        }
 
-        binding.rvSkills.setLayoutManager(new LinearLayoutManager(requireContext()));
-        loadSkillData();
-
-        binding.rvCertifications.setLayoutManager(new LinearLayoutManager(requireContext()));
-        loadCertificationData();
-
-        binding.rvEducation.setAdapter(educationAdapter);
-        binding.rvExperience.setAdapter(experienceAdapter);
-        binding.rvProjects.setAdapter(projectAdapter);
-        binding.rvSkills.setAdapter(skillAdapter);
-        binding.rvCertifications.setAdapter(certificationAdapter);
     }
 
     private void loadEducationData() {

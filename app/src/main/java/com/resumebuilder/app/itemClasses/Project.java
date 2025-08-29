@@ -1,5 +1,7 @@
 package com.resumebuilder.app.itemClasses;
 
+import androidx.annotation.NonNull;
+
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
@@ -7,6 +9,16 @@ public class Project {
     private String titleOfProject, organization;
     private YearMonth  startDate, endDate;
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "Project{" +
+                "titleOfProject='" + titleOfProject + '\'' +
+                ", organization='" + organization + '\'' +
+                ", startDate=" + (startDate != null ? startDate.toString() : "null") +
+                ", endDate=" + (endDate != null ? endDate.toString() : "null") +
+                '}';
+    }
     public Project() {
     }
     private  String projectDesc;

@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@id/progress_bar"
         app:layout_constraintBottom_toTopOf="@id/scrollView"/>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -86,12 +86,14 @@
                             android:textSize="18sp"
                             android:textColor="@color/primary" />
 
-                        <ImageView
-                            android:id="@+id/icon_expand_personal"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                        <ImageButton
+                            android:id="@+id/btn_expand_personal"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:src="@drawable/back_button"
-                            android:contentDescription="@string/expand_personal_details" />
+                            android:contentDescription="@string/expand_personal_details"
+                            android:scaleType="centerInside"
+                            android:background="@null" />
                     </LinearLayout>
 
                     <!-- Content -->
@@ -204,12 +206,14 @@
                             android:textSize="18sp"
                             android:textColor="@color/primary" />
 
-                        <ImageView
-                            android:id="@+id/icon_expand_summary"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                        <ImageButton
+                            android:id="@+id/btn_expand_summary"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:src="@drawable/back_button"
-                            android:contentDescription="@string/expand_summary" />
+                            android:contentDescription="@string/expand_summary"
+                            android:scaleType="centerInside"
+                            android:background="@null"/>
                     </LinearLayout>
 
                     <!-- Content -->
@@ -272,12 +276,14 @@
                             android:textSize="18sp"
                             android:textColor="@color/primary" />
 
-                        <ImageView
-                            android:id="@+id/icon_expand_education"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                        <ImageButton
+                            android:id="@+id/btn_expand_education"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:src="@drawable/back_button"
-                            android:contentDescription="@string/expand_education" />
+                            android:contentDescription="@string/expand_education"
+                            android:scaleType="centerInside"
+                            android:background="@null"/>
                     </LinearLayout>
 
                     <!-- Content -->
@@ -342,12 +348,14 @@
                             android:textSize="18sp"
                             android:textColor="@color/primary" />
 
-                        <ImageView
-                            android:id="@+id/icon_expand_experience"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                        <ImageButton
+                            android:id="@+id/btn_expand_experience"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:src="@drawable/back_button"
-                            android:contentDescription="@string/expand_education" />
+                            android:contentDescription="@string/expand_education"
+                            android:scaleType="centerInside"
+                            android:background="@null"/>
                     </LinearLayout>
 
                     <!-- Content -->
@@ -412,12 +420,14 @@
                             android:textSize="18sp"
                             android:textColor="@color/primary" />
 
-                        <ImageView
-                            android:id="@+id/icon_expand_projects"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                        <ImageButton
+                            android:id="@+id/btn_expand_projects"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:src="@drawable/back_button"
-                            android:contentDescription="@string/expand_projects" />
+                            android:contentDescription="@string/expand_projects"
+                            android:scaleType="centerInside"
+                            android:background="@null"/>
                     </LinearLayout>
 
                     <!-- Content -->
@@ -483,12 +493,14 @@
                             android:textSize="18sp"
                             android:textColor="@color/primary" />
 
-                        <ImageView
-                            android:id="@+id/icon_expand_skills"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                        <ImageButton
+                            android:id="@+id/btn_expand_skills"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:src="@drawable/back_button"
-                            android:contentDescription="@string/expand_skills" />
+                            android:contentDescription="@string/expand_skills"
+                            android:scaleType="centerInside"
+                            android:background="@null"/>
                     </LinearLayout>
 
                     <!-- Content -->
@@ -554,12 +566,14 @@
                             android:textSize="18sp"
                             android:textColor="@color/primary" />
 
-                        <ImageView
-                            android:id="@+id/icon_expand_certifications"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                        <ImageButton
+                            android:id="@+id/btn_expand_certifications"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:src="@drawable/back_button"
-                            android:contentDescription="@string/expand_certifications" />
+                            android:contentDescription="@string/expand_certifications"
+                            android:scaleType="centerInside"
+                            android:background="@null"/>
                     </LinearLayout>
 
                     <!-- Content -->
@@ -603,7 +617,7 @@
                 android:text="@string/save"
                 />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

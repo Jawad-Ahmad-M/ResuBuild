@@ -56,4 +56,6 @@
     <string name="next">Next</string>
     <string name="ok">OK</string>
     <string name="link_to_certificate">Link to Certificate\n</string>
+    <string name="add_bullet">Add Bullet</string>
+    <string name="bullet_s_description">Bullet\'s Description</string>
 </resources>

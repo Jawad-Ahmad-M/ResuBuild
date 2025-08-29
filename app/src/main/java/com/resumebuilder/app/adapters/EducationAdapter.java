@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,8 +17,8 @@ import com.resumebuilder.app.itemClasses.Education;
 import java.util.List;
 
 public class EducationAdapter extends RecyclerView.Adapter<EducationAdapter.EducationViewHolder> {
-    private List<Education> educationList;
-    private DatePickerBottomSheet datePickerBottomSheet;
+    private final List<Education> educationList;
+    private final DatePickerBottomSheet datePickerBottomSheet;
 
     public EducationAdapter(List<Education> educationList, Context context) {
         this.educationList = educationList;
@@ -44,17 +43,13 @@ public class EducationAdapter extends RecyclerView.Adapter<EducationAdapter.Educ
         holder.startDate.setText(education.getStartDate());
         holder.endDate.setText(education.getEndDate());
 
-        holder.startDate.setOnClickListener(v -> {
-            datePickerBottomSheet.showForEditText(holder.startDate);
-        });
-        holder.endDate.setOnClickListener(v -> {
-            datePickerBottomSheet.showForEditText(holder.endDate);
-        });
+        holder.startDate.setOnClickListener(v -> datePickerBottomSheet.showForEditText(holder.startDate));
+        holder.endDate.setOnClickListener(v -> datePickerBottomSheet.showForEditText(holder.endDate));
 
         holder.btnRemove.setOnClickListener(v -> {
             educationList.remove(position);
             notifyItemRemoved(position);
-            notifyItemChanged(position, educationList.size());
+            notifyItemRangeChanged(position, educationList.size());
         });
 
     }
@@ -77,9 +72,4 @@ public class EducationAdapter extends RecyclerView.Adapter<EducationAdapter.Educ
             btnRemove = itemView.findViewById(R.id.btn_remove);
         }
     }
-
-//    public void updateEducationList(List<Education> newEducationList) {
-//        this.educationList = newEducationList;
-//        notifyDataSetChanged();
-//    }
 }

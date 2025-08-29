@@ -3,7 +3,6 @@ package com.resumebuilder.app;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -79,6 +77,29 @@ public class DatePickerBottomSheet {
         monthTextViewsPresent = false;
         yearTextViewsPresent = false;
 
+        // Parse the text from the EditText to set the selected month and year
+        String[] parts = currentEditText.getText().toString().split(" ");
+        if (parts.length == 2) {
+            String monthText = parts[0];
+            String yearText = parts[1];
+
+            // Find the month index
+            for (int i = 0; i < months.length; i++) {
+                if (months[i].equalsIgnoreCase(monthText)) {
+                    selectedMonths.put(currentEditText.getId(), i);
+                    break;
+                }
+            }
+
+            // Parse the year
+            try {
+                int year = Integer.parseInt(yearText);
+                selectedYears.put(currentEditText.getId(), year);
+            } catch (NumberFormatException e) {
+                // Handle the case where year is not a valid number
+            }
+        }
+
         populateMonthsGrid();
         populateYearsGrid();
 
@@ -108,7 +129,12 @@ public class DatePickerBottomSheet {
         });
 
         bottomSheetDialog.show();
+
+        // Update the UI to reflect the selected month and year
+        updateMonthSelection();
+        updateYearSelection();
     }
+
 
     private void updateEditText() {
         if (currentEditText == null) return;
@@ -238,41 +264,41 @@ public class DatePickerBottomSheet {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
-    public void saveState(Bundle outState) {
-        // Save selections for each EditText
-        outState.putSerializable("selectedMonths", (HashMap<Integer, Integer>) selectedMonths);
-        outState.putSerializable("selectedYears", (HashMap<Integer, Integer>) selectedYears);
-        outState.putInt("currentYearStart", currentYearStart);
-        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
-            outState.putBoolean("dialogShowing", true);
-            if (currentEditText != null) {
-                outState.putInt("currentEditTextId", currentEditText.getId());
-            }
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void restoreState(Bundle savedInstanceState) {
-        // Restore selections
-        selectedMonths.clear();
-        selectedYears.clear();
-        Map<Integer, Integer> savedMonths = (Map<Integer, Integer>) savedInstanceState.getSerializable("selectedMonths");
-        Map<Integer, Integer> savedYears = (Map<Integer, Integer>) savedInstanceState.getSerializable("selectedYears");
-        if (savedMonths != null) {
-            selectedMonths.putAll(savedMonths);
-        }
-        if (savedYears != null) {
-            selectedYears.putAll(savedYears);
-        }
-        currentYearStart = savedInstanceState.getInt("currentYearStart", getCurrentYear() - (getCurrentYear() % yearsCount));
-        if (savedInstanceState.getBoolean("dialogShowing", false)) {
-            int editTextId = savedInstanceState.getInt("currentEditTextId", -1);
-            if (editTextId != -1) {
-                EditText editText = ((AppCompatActivity) context).findViewById(editTextId);
-                if (editText != null) {
-                    showForEditText(editText);
-                }
-            }
-        }
-    }
+//    public void saveState(Bundle outState) {
+//        // Save selections for each EditText
+//        outState.putSerializable("selectedMonths", (HashMap<Integer, Integer>) selectedMonths);
+//        outState.putSerializable("selectedYears", (HashMap<Integer, Integer>) selectedYears);
+//        outState.putInt("currentYearStart", currentYearStart);
+//        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+//            outState.putBoolean("dialogShowing", true);
+//            if (currentEditText != null) {
+//                outState.putInt("currentEditTextId", currentEditText.getId());
+//            }
+//        }
+//    }
+//
+//    @SuppressWarnings("unchecked")
+//    public void restoreState(Bundle savedInstanceState) {
+//        // Restore selections
+//        selectedMonths.clear();
+//        selectedYears.clear();
+//        Map<Integer, Integer> savedMonths = (Map<Integer, Integer>) savedInstanceState.getSerializable("selectedMonths");
+//        Map<Integer, Integer> savedYears = (Map<Integer, Integer>) savedInstanceState.getSerializable("selectedYears");
+//        if (savedMonths != null) {
+//            selectedMonths.putAll(savedMonths);
+//        }
+//        if (savedYears != null) {
+//            selectedYears.putAll(savedYears);
+//        }
+//        currentYearStart = savedInstanceState.getInt("currentYearStart", getCurrentYear() - (getCurrentYear() % yearsCount));
+//        if (savedInstanceState.getBoolean("dialogShowing", false)) {
+//            int editTextId = savedInstanceState.getInt("currentEditTextId", -1);
+//            if (editTextId != -1) {
+//                EditText editText = ((AppCompatActivity) context).findViewById(editTextId);
+//                if (editText != null) {
+//                    showForEditText(editText);
+//                }
+//            }
+//        }
+//    }
 }

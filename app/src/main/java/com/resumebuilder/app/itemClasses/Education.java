@@ -1,11 +1,23 @@
 package com.resumebuilder.app.itemClasses;
 
+import androidx.annotation.NonNull;
+
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
 public class Education {
     private String universityName, location, titleOfDegree;
     private YearMonth startDate, endDate;
+
+    @NonNull
+    public String toString(){
+        return "Education{" +
+                "University='" + universityName + '\'' +
+                ",Degree='" + titleOfDegree + '\'' +
+                ",Range='" + startDate + "/" +endDate + '\'' +
+                ",'location='" + location + '\'' +
+                '}';
+    }
 
     public Education() {}
 
