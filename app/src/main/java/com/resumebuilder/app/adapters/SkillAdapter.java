@@ -46,9 +46,20 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHol
     }
 
 
+
     @Override
     public int getItemCount() {
         return skillList.size();
+    }
+
+    public void updateSkillListFromInputs() {
+        for (int i = 0; i < getItemCount(); i++) {
+            SkillViewHolder holder = (SkillViewHolder) bindingRecyclerView.findViewHolderForAdapterPosition(i);
+            if (holder != null) {
+                String skillName = holder.nameOfSkill.getText().toString().trim();
+                skillList.get(i).setNameOfSkill(skillName);
+            }
+        }
     }
 
     public static class SkillViewHolder extends RecyclerView.ViewHolder {
@@ -60,8 +71,14 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHol
             nameOfSkill = itemView.findViewById(R.id.et_skill_name);
             btnRemove = itemView.findViewById(R.id.btn_remove);
         }
+
     }
 
+    // 📌 Needs to be set from the Fragment to access RecyclerView reference
+    private RecyclerView bindingRecyclerView;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.bindingRecyclerView = recyclerView;
+    }
 
 
 

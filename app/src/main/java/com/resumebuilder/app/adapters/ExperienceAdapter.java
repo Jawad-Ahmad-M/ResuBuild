@@ -65,6 +65,33 @@ public class ExperienceAdapter extends RecyclerView.Adapter<ExperienceAdapter.Ex
         return experienceList.size();
     }
 
+    public void updateExperienceListFromInputs() {
+        for (int i = 0; i < getItemCount(); i++) {
+            ExperienceAdapter.ExperienceViewHolder holder = (ExperienceAdapter.ExperienceViewHolder) bindingRecyclerView.findViewHolderForAdapterPosition(i);
+            if (holder != null) {
+                String jobRole = holder.jobRole.getText().toString().trim();
+                String location = holder.location.getText().toString().trim();
+                String startDate = holder.startDate.getText().toString().trim();
+                String endDate = holder.endDate.getText().toString().trim();
+                String companyName = holder.companyName.getText().toString().trim();
+                String jobDesc = holder.jobDesc.getText().toString().trim();
+
+                experienceList.get(i).setJobRole(jobRole);
+                experienceList.get(i).setLocation(location);
+                experienceList.get(i).setStartDate(startDate);
+                experienceList.get(i).setEndDate(endDate);
+                experienceList.get(i).setCompanyName(companyName);
+                experienceList.get(i).setJobDescription(jobDesc);
+            }
+        }
+    }
+
+    // 📌 Needs to be set from the Fragment to access RecyclerView reference
+    private RecyclerView bindingRecyclerView;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.bindingRecyclerView = recyclerView;
+    }
+
     public static class ExperienceViewHolder extends RecyclerView.ViewHolder {
         EditText jobRole, companyName, location, startDate, endDate, jobDesc;
         Button btnRemove;

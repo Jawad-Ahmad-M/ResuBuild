@@ -30,7 +30,7 @@ public class EducationAdapter extends RecyclerView.Adapter<EducationAdapter.Educ
     public EducationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_education, parent, false);
-        return new EducationViewHolder(view);
+        return new EducationAdapter.EducationViewHolder(view);
     }
 
     @Override
@@ -59,6 +59,31 @@ public class EducationAdapter extends RecyclerView.Adapter<EducationAdapter.Educ
         return educationList.size();
     }
 
+    public void updateEducationListFromInputs() {
+        for (int i = 0; i < getItemCount(); i++) {
+            EducationAdapter.EducationViewHolder holder = (EducationAdapter.EducationViewHolder) bindingRecyclerView.findViewHolderForAdapterPosition(i);
+            if (holder != null) {
+                String universityName = holder.universityName.getText().toString().trim();
+                String location = holder.location.getText().toString().trim();
+                String startDate = holder.startDate.getText().toString().trim();
+                String endDate = holder.endDate.getText().toString().trim();
+                String degreeTitle = holder.degreeTitle.getText().toString().trim();
+
+                educationList.get(i).setUniversityName(universityName);
+                educationList.get(i).setLocation(location);
+                educationList.get(i).setStartDate(startDate);
+                educationList.get(i).setEndDate(endDate);
+                educationList.get(i).setTitleOfDegree(degreeTitle);
+            }
+        }
+    }
+
+    // 📌 Needs to be set from the Fragment to access RecyclerView reference
+    private RecyclerView bindingRecyclerView;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.bindingRecyclerView = recyclerView;
+    }
+
     public static class EducationViewHolder extends RecyclerView.ViewHolder {
         EditText universityName, degreeTitle, location, startDate, endDate;
         Button btnRemove;
@@ -72,4 +97,5 @@ public class EducationAdapter extends RecyclerView.Adapter<EducationAdapter.Educ
             btnRemove = itemView.findViewById(R.id.btn_remove);
         }
     }
+
 }

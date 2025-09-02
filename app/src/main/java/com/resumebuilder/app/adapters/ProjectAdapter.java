@@ -63,6 +63,31 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         return projectList.size();
     }
 
+    public void updateProjectListFromInputs() {
+        for (int i = 0; i < getItemCount(); i++) {
+            ProjectAdapter.ProjectViewHolder holder = (ProjectAdapter.ProjectViewHolder) bindingRecyclerView.findViewHolderForAdapterPosition(i);
+            if (holder != null) {
+                String titleOfProject = holder.titleOfProject.getText().toString().trim();
+                String organization = holder.organization.getText().toString().trim();
+                String startDate = holder.startDate.getText().toString().trim();
+                String endDate = holder.endDate.getText().toString().trim();
+                String projectDesc = holder.projectDesc.getText().toString().trim();
+
+                projectList.get(i).setTitleOfProject(titleOfProject);
+                projectList.get(i).setOrganization(organization);
+                projectList.get(i).setStartDate(startDate);
+                projectList.get(i).setEndDate(endDate);
+                projectList.get(i).setProjectDesc(projectDesc);
+            }
+        }
+    }
+
+    // 📌 Needs to be set from the Fragment to access RecyclerView reference
+    private RecyclerView bindingRecyclerView;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.bindingRecyclerView = recyclerView;
+    }
+
     public static class ProjectViewHolder extends RecyclerView.ViewHolder {
         EditText titleOfProject, organization, startDate, endDate, projectDesc;
         Button btnRemove;

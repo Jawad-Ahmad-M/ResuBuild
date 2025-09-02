@@ -54,6 +54,29 @@ public class CertificationAdapter extends RecyclerView.Adapter<CertificationAdap
         return certificationList.size();
     }
 
+    public void updateCertificationListFromInputs() {
+        for (int i = 0; i < getItemCount(); i++) {
+            CertificationAdapter.CertificationViewHolder holder = (CertificationAdapter.CertificationViewHolder) bindingRecyclerView.findViewHolderForAdapterPosition(i);
+            if (holder != null) {
+                String nameOfCertification = holder.nameOfCertification.getText().toString().trim();
+                String nameOfOrganization = holder.nameOfOrganization.getText().toString().trim();
+                String issuedDate = holder.issuedDate.getText().toString().trim();
+                String link = holder.link.getText().toString().trim();
+
+                certificationList.get(i).setNameOfCertification(nameOfCertification);
+                certificationList.get(i).setNameOfOrganization(nameOfOrganization);
+                certificationList.get(i).setLink(link);
+                certificationList.get(i).setIssuedDate(issuedDate);
+            }
+        }
+    }
+
+    // 📌 Needs to be set from the Fragment to access RecyclerView reference
+    private RecyclerView bindingRecyclerView;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.bindingRecyclerView = recyclerView;
+    }
+
     public static class CertificationViewHolder extends RecyclerView.ViewHolder {
         EditText nameOfCertification, nameOfOrganization, issuedDate, link;
         Button btnRemove;

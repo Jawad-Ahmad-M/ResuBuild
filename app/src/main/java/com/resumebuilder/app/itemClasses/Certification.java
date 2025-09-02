@@ -1,5 +1,6 @@
 package com.resumebuilder.app.itemClasses;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,19 +10,6 @@ public class Certification {
     private int id;
     private String nameOfCertification, nameOfOrganization, issuedDate, link;
     public Certification() {
-    }
-
-    public Certification(String nameOfCertification, String nameOfOrganization, String issuedDate, String link) {
-        this.nameOfCertification = nameOfCertification;
-        this.nameOfOrganization = nameOfOrganization;
-        this.issuedDate = issuedDate;
-        this.link = link;
-    }
-
-    public Certification(String nameOfCertification, String nameOfOrganization, String issuedDate) {
-        this.nameOfCertification = nameOfCertification;
-        this.nameOfOrganization = nameOfOrganization;
-        this.issuedDate = issuedDate;
     }
 
     public int getId() {
@@ -64,4 +52,14 @@ public class Certification {
         return link;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "Certification{" +
+                "name='" + getNameOfCertification() + '\'' +
+                ", organization='" + getNameOfOrganization() + '\'' +
+                ", Issued Date='" + (getIssuedDate() != null ? getIssuedDate() : "null") + '\'' +
+                ", Link='" + (getLink() != null ? getLink() : "null") + '\'' +
+                '}';
+    }
 }

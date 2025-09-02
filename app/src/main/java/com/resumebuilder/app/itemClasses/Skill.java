@@ -1,5 +1,6 @@
 package com.resumebuilder.app.itemClasses;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 @Entity(tableName = "Skill")
@@ -22,11 +23,15 @@ public class Skill {
         this.nameOfSkill = nameOfSkill;
     }
 
-    public Skill(String nameOfSkill) {
-        this.nameOfSkill = nameOfSkill;
-    }
-
     public String getNameOfSkill() {
         return nameOfSkill;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Skill{" +
+                "skillName='" + (getNameOfSkill() != null ? getNameOfSkill() : "null") + '\'' +
+                '}';
     }
 }
