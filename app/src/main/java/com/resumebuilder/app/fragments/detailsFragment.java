@@ -5,6 +5,7 @@ import static android.view.View.VISIBLE;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.resumebuilder.app.adapters.EducationAdapter;
 import com.resumebuilder.app.adapters.ExperienceAdapter;
 import com.resumebuilder.app.adapters.ProjectAdapter;
 import com.resumebuilder.app.adapters.SkillAdapter;
+import com.resumebuilder.app.database.AppDatabase;
 import com.resumebuilder.app.databinding.FragmentDetailsBinding;
 import com.resumebuilder.app.itemClasses.Certification;
 import com.resumebuilder.app.itemClasses.Education;
@@ -31,8 +33,22 @@ import com.resumebuilder.app.testActivity;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class detailsFragment extends Fragment {
+
+    private int heightPersonal;
+    private int heightSummary;
+    private int heightEducation;
+    private int heightExperience;
+    private int heightProjects;
+    private int heightSkills;
+    private int heightCertifications;
+
+    private String DEBUG_TAG = "Room DB Services";
+
+    private AppDatabase db;
 
     private boolean isSectionPersonalVisible = true;
     private boolean isSectionSummaryVisible  = true;
@@ -43,7 +59,7 @@ public class detailsFragment extends Fragment {
     private boolean isSectionCertificationVisible = true;
 
     private FragmentDetailsBinding binding;
-    private final List<Education> educationList = new ArrayList<>();
+    private List<Education> educationList = new ArrayList<>();
     private final List<Experience> experienceList = new ArrayList<>();
     private final List<Project> projectList = new ArrayList<>();
     private final List<Skill> skillList = new ArrayList<>();
@@ -75,6 +91,8 @@ public class detailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        db = AppDatabase.getInstance(requireContext().getApplicationContext());
+
         educationAdapter = new EducationAdapter(educationList, requireContext());
         experienceAdapter = new ExperienceAdapter(experienceList, requireContext());
         projectAdapter = new ProjectAdapter(projectList, requireContext());
@@ -97,11 +115,43 @@ public class detailsFragment extends Fragment {
         binding.rvCertifications.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.rvCertifications.setAdapter(certificationAdapter);
 
-        loadEducationData();
-        loadExperienceData();
-        loadProjectData();
-        loadSkillData();
-        loadCertificationData();
+//        loadEducationData();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        executorService.execute(() -> {
+            db.educationDao().insertEducation(new Education("ABC", "abc","XYZ","Jul 2028","Jun 2027"));
+            List<Education> list = db.educationDao().getAllEducation();
+            educationList.addAll(list);
+            Log.d(DEBUG_TAG, educationList.toString());
+        });
+
+        executorService.execute(()->{
+            db.experienceDao().insertExperience(new Experience());
+            List<Experience> list = db.experienceDao().getAllExperience();
+            experienceList.addAll(list);
+            Log.d(DEBUG_TAG, experienceList.toString());
+        });
+
+        executorService.execute(()->{
+            db.projectDao().insertProject(new Project());
+            List<Project> list = db.projectDao().getAllProjects();
+            projectList.addAll(list);
+            Log.d(DEBUG_TAG, projectList.toString());
+        });
+
+        executorService.execute(()->{
+            db.skillsDao().insertSkill(new Skill());
+            List<Skill> list = db.skillsDao().getAllSkills();
+            skillList.addAll(list);
+            Log.d(DEBUG_TAG, skillList.toString());
+        });
+
+        executorService.execute(()->{
+            db.certificationDao().insertCertification(new Certification());
+            List<Certification> list = db.certificationDao().getAllCertifications();
+            certificationList.addAll(list);
+            Log.d(DEBUG_TAG, certificationList.toString());
+        });
 
         setFirstView();
 
@@ -136,6 +186,14 @@ public class detailsFragment extends Fragment {
             );
             setViewsVisibility(binding.btnExpandEducation);
         });
+
+//        binding.btnExpandEducation.setOnClickListener(v -> {
+//            if (!isSectionEducationVisible) {
+//                binding.contentEducation.setVisibility(VISIBLE);
+//            } else {
+//                binding.contentEducation.setVisibility(GONE);
+//            }
+//        });
 
         binding.btnExpandExperience.setOnClickListener(v -> {
             isSectionExperienceVisible = !isSectionExperienceVisible;
@@ -206,9 +264,13 @@ public class detailsFragment extends Fragment {
             certificationAdapter.notifyItemInserted(certificationList.size() - 1);
         });
 
+        binding.btnSave.setOnClickListener(v -> {
+            for (Education e : educationList){
+                db.educationDao().insertEducation(e);
+            }
+        });
 
     }
-
     private void setFirstView() {
         binding.contentPersonal.setVisibility(VISIBLE);
         binding.contentSummary.setVisibility(GONE);
@@ -285,24 +347,24 @@ public class detailsFragment extends Fragment {
 
     }
 
-    private void loadEducationData() {
-        // Load or initialize your education data
-        educationList.clear();
-        educationList.add(new Education("MIT", "BSc Computer Science", "Cambridge, MA", YearMonth.of(2020,3), YearMonth.of(2024,3)));
-        educationList.add(new Education("MIT", "BSc Computer Science", "Cambridge, MA", YearMonth.of(2020,3), YearMonth.of(2024,3)));
-    }
+//    private void loadEducationData() {
+//        // Load or initialize your education data
+//        educationList.clear();
+//        educationList.add(new Education("MIT", "BSc Computer Science", "Cambridge, MA", YearMonth.of(2020,3), YearMonth.of(2024,3)));
+//        educationList.add(new Education("MIT", "BSc Computer Science", "Cambridge, MA", YearMonth.of(2020,3), YearMonth.of(2024,3)));
+//    }
 
-    private void loadExperienceData() {
-        experienceList.clear();
-        experienceList.add(new Experience("Software Engineer", "San Francisco, CA", YearMonth.of(2020,3), YearMonth.of(2023,6), "Google", "Worked on developing scalable backend services."));
-        experienceList.add(new Experience("Senior Developer", "New York, NY", YearMonth.of(2020,3), YearMonth.of(2023,6), "Facebook", "Leading a team on mobile app development."));
-    }
-
-    private void loadProjectData() {
-        projectList.clear();
-        projectList.add(new Project("AI Chatbot Integration", "OpenAI", YearMonth.of(2021, 5), YearMonth.of(2022, 12), "Developed and integrated an AI-powered chatbot into customer support systems to automate query handling."));
-        projectList.add(new Project("E-Commerce Web Platform", "Amazon", YearMonth.of(2019, 8), YearMonth.of(2021, 3), "Built a scalable web-based e-commerce platform with payment gateway integration and advanced product recommendation system."));
-    }
+//    private void loadExperienceData() {
+//        experienceList.clear();
+//        experienceList.add(new Experience("Software Engineer", "San Francisco, CA", YearMonth.of(2020,3), YearMonth.of(2023,6), "Google", "Worked on developing scalable backend services."));
+//        experienceList.add(new Experience("Senior Developer", "New York, NY", YearMonth.of(2020,3), YearMonth.of(2023,6), "Facebook", "Leading a team on mobile app development."));
+//    }
+//
+//    private void loadProjectData() {
+//        projectList.clear();
+//        projectList.add(new Project("AI Chatbot Integration", "OpenAI", YearMonth.of(2021, 5), YearMonth.of(2022, 12), "Developed and integrated an AI-powered chatbot into customer support systems to automate query handling."));
+//        projectList.add(new Project("E-Commerce Web Platform", "Amazon", YearMonth.of(2019, 8), YearMonth.of(2021, 3), "Built a scalable web-based e-commerce platform with payment gateway integration and advanced product recommendation system."));
+//    }
 
     private void loadSkillData() {
         skillList.clear();

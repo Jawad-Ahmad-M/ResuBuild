@@ -38,6 +38,8 @@ android {
 
 dependencies {
 
+    implementation (libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
     implementation (libs.android.pdf.viewer)
     implementation(libs.viewpager2)
     implementation(libs.appcompat)

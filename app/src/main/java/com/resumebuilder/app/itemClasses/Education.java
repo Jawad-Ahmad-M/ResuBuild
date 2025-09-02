@@ -1,13 +1,37 @@
 package com.resumebuilder.app.itemClasses;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-
+@Entity(tableName = "Education")
 public class Education {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String universityName, location, titleOfDegree;
-    private YearMonth startDate, endDate;
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setTitleOfDegree(String titleOfDegree) {
+        this.titleOfDegree = titleOfDegree;
+    }
+
+    private String startDate, endDate;
 
     @NonNull
     public String toString(){
@@ -21,7 +45,23 @@ public class Education {
 
     public Education() {}
 
-    public Education(String universityName, String location, String titleOfDegree, YearMonth startDate, YearMonth endDate) {
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Education(String universityName, String location, String titleOfDegree, String  startDate, String  endDate) {
         this.universityName = universityName;
         this.location = location;
         this.titleOfDegree = titleOfDegree;
@@ -36,22 +76,6 @@ public class Education {
 
     public String getLocation() {
         return location;
-    }
-
-    public String getStartDate() {
-        if (startDate != null){
-            return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
-        } else {
-            return  "";
-        }
-    }
-
-    public String getEndDate() {
-        if (endDate != null) {
-            return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
-        } else {
-            return "";
-        }
     }
 
     public String getTitleOfDegree() {

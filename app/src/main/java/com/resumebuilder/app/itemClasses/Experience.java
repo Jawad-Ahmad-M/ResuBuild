@@ -1,14 +1,24 @@
 package com.resumebuilder.app.itemClasses;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-
+@Entity(tableName = "Experience")
 public class Experience {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String jobRole, location, companyName, jobDescription;
-    private YearMonth startDate, endDate;
+    private String startDate, endDate;
     public Experience() {}
+    public Experience(String jobRole, String location,String startDate, String endDate, String companyName, String jobDescription) {
+        this.jobRole = jobRole;
+        this.location = location;
+        this.companyName = companyName;
+        this.jobDescription = jobDescription;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     @NonNull
     @Override
@@ -18,18 +28,25 @@ public class Experience {
                 ", location='" + location + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", jobDescription='" + jobDescription + '\'' +
-                ", startDate=" + (startDate != null ? startDate.toString() : "null") +
-                ", endDate=" + (endDate != null ? endDate.toString() : "null") +
+                ", startDate=" + (startDate != null ? startDate : "null") +
+                ", endDate=" + (endDate != null ? endDate : "null") +
                 '}';
     }
 
-    public Experience(String jobRole, String location,YearMonth startDate, YearMonth endDate, String companyName, String jobDescription) {
+    public void setJobRole(String jobRole) {
         this.jobRole = jobRole;
+    }
+
+    public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
-        this.startDate = startDate;
-        this.endDate = endDate;
     }
 
     public String getJobRole() {
@@ -40,21 +57,27 @@ public class Experience {
         return location;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getStartDate() {
-        if (startDate != null){
-            return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
-        } else {
-            return  "";
-        }
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
     public String getEndDate() {
-        if (endDate != null) {
-            return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
-        } else {
-            return "";
-        }
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public String getCompanyName() {
