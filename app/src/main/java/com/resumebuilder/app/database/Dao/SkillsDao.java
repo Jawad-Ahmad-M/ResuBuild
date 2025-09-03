@@ -18,6 +18,6 @@ public interface SkillsDao {
     void updateSkill(Skill skill);
     @Delete
     void deleteSkill(Skill skill);
-    @Query("SELECT * FROM Skill")
-    List<Skill> getAllSkills();
+    @Query("SELECT * FROM Skill WHERE resumeId=:resumeId")
+    List<Skill> getAllSkillsById(int resumeId);
 }

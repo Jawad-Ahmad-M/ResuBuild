@@ -18,6 +18,6 @@ public interface ProjectDao {
     void deleteProject(Project project);
     @Update
     void updateProject(Project project);
-    @Query("SELECT * FROM Project")
-    List<Project> getAllProjects();
+    @Query("SELECT * FROM Project WHERE resumeId =:resumeId")
+    List<Project> getAllProjectsById(int resumeId);
 }

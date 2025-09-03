@@ -18,6 +18,6 @@ public interface CertificationDao {
     void updateCertification(Certification certification);
     @Delete
     void deleteCertification(Certification certification);
-    @Query("SELECT * FROM Certification")
-    List<Certification> getAllCertifications();
+    @Query("SELECT * FROM Certification WHERE resumeId =:resumeId")
+    List<Certification> getAllCertificationsById(int resumeId);
 }

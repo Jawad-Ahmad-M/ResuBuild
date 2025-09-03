@@ -18,6 +18,6 @@ public interface ExperienceDao {
     void updateExperience(Experience experience);
     @Delete
     void deleteExperience(Experience experience);
-    @Query("SELECT * FROM Experience")
-    List<Experience> getAllExperience();
+    @Query("SELECT * FROM Experience Where resumeId =:resumeId")
+    List<Experience> getAllExperienceById(int resumeId);
 }
