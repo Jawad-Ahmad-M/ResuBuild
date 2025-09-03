@@ -26,6 +26,7 @@ import com.resumebuilder.app.databinding.FragmentDetailsBinding;
 import com.resumebuilder.app.itemClasses.Certification;
 import com.resumebuilder.app.itemClasses.Education;
 import com.resumebuilder.app.itemClasses.Experience;
+import com.resumebuilder.app.itemClasses.PersonalDetails;
 import com.resumebuilder.app.itemClasses.Project;
 import com.resumebuilder.app.itemClasses.Skill;
 import com.resumebuilder.app.sync.DataSyncManager;
@@ -56,7 +57,8 @@ public class detailsFragment extends Fragment {
     private final List<Project> projectList = new ArrayList<>();
     private final List<Skill> skillList = new ArrayList<>();
     private final List<Certification> certificationList = new ArrayList<>();
-
+    private PersonalDetails details;
+    private int currentResumeId;
     private EducationAdapter educationAdapter;
     private ExperienceAdapter experienceAdapter;
     private ProjectAdapter projectAdapter;
@@ -85,7 +87,31 @@ public class detailsFragment extends Fragment {
 
         executorService = Executors.newFixedThreadPool(5);
         db = AppDatabase.getInstance(requireContext().getApplicationContext());
-        dataSyncManager = new DataSyncManager(executorService, requireContext().getApplicationContext());
+        dataSyncManager = new DataSyncManager(requireContext().getApplicationContext());
+
+        executorService.execute(()->{
+            List<PersonalDetails> personalDetailsList = db.personalDetailsDao().getAllPersonalDetails();
+            if (personalDetailsList != null && !personalDetailsList.isEmpty()) {
+                details = personalDetailsList.get(0);
+            } else {
+                details = new PersonalDetails();
+                long id = db.personalDetailsDao().insertPersonalDetails(details);
+                details.setResumeId((int) id);
+            }
+            Log.d(DEBUG_TAG, details.toString());
+            requireActivity().runOnUiThread(() -> {
+                binding.etName.setText(details.getName() != null ? details.getName() : "");
+                binding.etLocation.setText(details.getLocation() != null ? details.getLocation() : "");
+                binding.etContact.setText(details.getPhoneNumber() != null ? details.getPhoneNumber() : "");
+                binding.etEmail.setText(details.getPersonalEmail() != null ? details.getPersonalEmail() : "");
+                binding.etSummary.setText(details.getSummary() != null ? details.getSummary() : "");
+                binding.etLinkedin.setText(details.getLinkedInLink() != null ? details.getLinkedInLink() : "");
+                binding.etGithub.setText(details.getGithubLink() != null ? details.getGithubLink() : "");
+                currentResumeId = details.getResumeId();
+            });
+        });
+
+
 
         setFirstView();
         loadingDataFromDB();
@@ -164,27 +190,27 @@ public class detailsFragment extends Fragment {
     }
     private void additionButtons() {
         binding.btnAddEducation.setOnClickListener(v -> {
-            educationList.add(new Education());
+            educationList.add(new Education(currentResumeId));
             educationAdapter.notifyItemInserted(educationList.size() - 1);
         });
 
         binding.btnAddExperience.setOnClickListener(v -> {
-            experienceList.add(new Experience());
+            experienceList.add(new Experience(currentResumeId));
             experienceAdapter.notifyItemInserted(experienceList.size() - 1);
         });
 
         binding.btnAddProjects.setOnClickListener(v -> {
-            projectList.add(new Project());
+            projectList.add(new Project(currentResumeId));
             projectAdapter.notifyItemInserted(projectList.size() - 1);
         });
 
         binding.btnAddSkill.setOnClickListener(v -> {
-            skillList.add(new Skill());
+            skillList.add(new Skill(currentResumeId));
             skillAdapter.notifyItemInserted(skillList.size() - 1);
         });
 
         binding.btnAddCertification.setOnClickListener(v -> {
-            certificationList.add(new Certification());
+            certificationList.add(new Certification(currentResumeId));
             certificationAdapter.notifyItemInserted(certificationList.size() - 1);
         });
     }
@@ -221,27 +247,40 @@ public class detailsFragment extends Fragment {
         });
     }
     private void saveData() {
+
         educationAdapter.updateEducationListFromInputs();
-        dataSyncManager.syncEducation(educationList);
-
         experienceAdapter.updateExperienceListFromInputs();
-        dataSyncManager.syncExperience(experienceList);
-
         projectAdapter.updateProjectListFromInputs();
-        dataSyncManager.syncProject(projectList);
-
         skillAdapter.updateSkillListFromInputs();
-        dataSyncManager.syncSkill(skillList);
-
         certificationAdapter.updateCertificationListFromInputs();
-        dataSyncManager.syncCertifications(certificationList);
 
-        Log.d(DEBUG_TAG, "All Entries Added");
-        Log.d(DEBUG_TAG, educationList.toString());
-        Log.d(DEBUG_TAG, experienceList.toString());
-        Log.d(DEBUG_TAG, projectList.toString());
-        Log.d(DEBUG_TAG, skillList.toString());
-        Log.d(DEBUG_TAG, certificationList.toString());
+        executorService.execute(() -> {
+            details.setName(binding.etName.getText().toString());
+            details.setLocation(binding.etLocation.getText().toString());
+            details.setPhoneNumber(binding.etContact.getText().toString());
+            details.setPersonalEmail(binding.etEmail.getText().toString());
+            details.setSummary(binding.etSummary.getText().toString());
+            details.setLinkedInLink(binding.etLinkedin.getText().toString());
+            details.setGithubLink(binding.etGithub.getText().toString());
+
+            db.runInTransaction(() -> {
+                db.personalDetailsDao().insertOrUpdate(details);
+
+                dataSyncManager.syncEducation(educationList);
+                dataSyncManager.syncExperience(experienceList);
+                dataSyncManager.syncProject(projectList);
+                dataSyncManager.syncSkill(skillList);
+                dataSyncManager.syncCertifications(certificationList);
+            });
+
+            Log.d(DEBUG_TAG, "All Entries Added");
+
+            Log.d(DEBUG_TAG, educationList.toString());
+            Log.d(DEBUG_TAG, experienceList.toString());
+            Log.d(DEBUG_TAG, projectList.toString());
+            Log.d(DEBUG_TAG, skillList.toString());
+            Log.d(DEBUG_TAG, certificationList.toString());
+        });
     }
     private void adapterSettings() {
         educationAdapter = new EducationAdapter(educationList, requireContext());

@@ -2,16 +2,42 @@ package com.resumebuilder.app.itemClasses;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Experience")
+@Entity(
+        tableName = "Experience",
+        foreignKeys = @ForeignKey(
+                entity = PersonalDetails.class,
+                parentColumns = "resumeId",
+                childColumns = "resumeId",
+                onDelete = ForeignKey.CASCADE
+        ),
+        indices = {@Index("resumeId")}
+)
 public class Experience {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private int resumeId;
+
+    public int getResumeId() {
+        return resumeId;
+    }
+
+    public void setResumeId(int resumeId) {
+        this.resumeId = resumeId;
+    }
+
     private String jobRole, location, companyName, jobDescription;
     private String startDate, endDate;
     public Experience() {}
-    public Experience(String jobRole, String location,String startDate, String endDate, String companyName, String jobDescription) {
+
+    public Experience(int resumeId) {
+        this.resumeId = resumeId;
+    }
+
+    public Experience(String jobRole, String location, String startDate, String endDate, String companyName, String jobDescription) {
         this.jobRole = jobRole;
         this.location = location;
         this.companyName = companyName;

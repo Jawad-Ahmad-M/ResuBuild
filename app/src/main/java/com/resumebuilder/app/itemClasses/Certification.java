@@ -2,14 +2,30 @@ package com.resumebuilder.app.itemClasses;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Certification")
+@Entity(
+        tableName = "Certification",
+        foreignKeys = @ForeignKey(
+                entity = PersonalDetails.class,
+                parentColumns = "resumeId",
+                childColumns = "resumeId",
+                onDelete = ForeignKey.CASCADE
+        ),
+        indices = {@Index("resumeId")}
+)
 public class Certification {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private int resumeId;
     private String nameOfCertification, nameOfOrganization, issuedDate, link;
     public Certification() {
+    }
+
+    public Certification(int resumeId) {
+        this.resumeId = resumeId;
     }
 
     public int getId() {
@@ -18,6 +34,14 @@ public class Certification {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getResumeId() {
+        return resumeId;
+    }
+
+    public void setResumeId(int resumeId) {
+        this.resumeId = resumeId;
     }
 
     public void setNameOfCertification(String nameOfCertification) {

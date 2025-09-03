@@ -1,30 +1,34 @@
 package com.resumebuilder.app.itemClasses;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "ResumeDetails")
 public class PersonalDetails {
+    @PrimaryKey(autoGenerate = true)
+    private int resumeId;
     private String name, location, personalEmail, phoneNumber, linkedInLink, githubLink;
+    private String summary;
 
-    public PersonalDetails(String name, String location, String personalEmail, String phoneNumber, String linkedInLink) {
-        this.name = name;
-        this.location = location;
-        this.personalEmail = personalEmail;
-        this.phoneNumber = phoneNumber;
-        this.linkedInLink = linkedInLink;
+    public PersonalDetails() {
     }
 
-    public PersonalDetails(String name, String location, String personalEmail, String phoneNumber) {
-        this.name = name;
-        this.location = location;
-        this.personalEmail = personalEmail;
-        this.phoneNumber = phoneNumber;
+
+    public int getResumeId() {
+        return resumeId;
     }
 
-    public PersonalDetails(String name, String location, String personalEmail, String phoneNumber, String linkedInLink, String githubLink) {
-        this.name = name;
-        this.location = location;
-        this.personalEmail = personalEmail;
-        this.phoneNumber = phoneNumber;
-        this.linkedInLink = linkedInLink;
-        this.githubLink = githubLink;
+    public void setResumeId(int resumeId) {
+        this.resumeId = resumeId;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getName() {
@@ -73,5 +77,20 @@ public class PersonalDetails {
 
     public void setGithubLink(String githubLink) {
         this.githubLink = githubLink;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Resume{" +
+                "resumeId=" + resumeId +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", personalEmail='" + personalEmail + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", linkedInLink='" + linkedInLink + '\'' +
+                ", githubLink='" + githubLink + '\'' +
+                ", summary='" + summary + '\'' +
+                '}';
     }
 }

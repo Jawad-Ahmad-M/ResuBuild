@@ -20,4 +20,6 @@ public interface EducationDao {
     void deleteEducation(Education education);
     @Query("SELECT * FROM Education ORDER BY id;")
     List<Education> getAllEducation();
+    @Query("SELECT * FROM Education Where resumeId =:resumeId")
+    List<Education> getAllEducationById(int resumeId);
 }
