@@ -13,7 +13,6 @@ import com.resumebuilder.app.utils.SyncUtil;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
 
 public class DataSyncManager {
     private final AppDatabase db;
@@ -23,8 +22,8 @@ public class DataSyncManager {
         this.context = context;
         this.db = AppDatabase.getInstance(context.getApplicationContext());
     }
-    public void syncEducation(List<Education> uiList) {
-        List<Education> dbList = db.educationDao().getAllEducation();
+    public void syncEducation(List<Education> uiList, int resumeId) {
+        List<Education> dbList = db.educationDao().getAllEducationById(resumeId);
 
         SyncUtil.sync(
                 dbList,
@@ -56,8 +55,8 @@ public class DataSyncManager {
         showToast("Education synced.");
     }
 
-    public void syncExperience(List<Experience> uiList) {
-        List<Experience> dbList = db.experienceDao().getAllExperience();
+    public void syncExperience(List<Experience> uiList, int resumeId) {
+        List<Experience> dbList = db.experienceDao().getAllExperienceById(resumeId);
 
         SyncUtil.sync(
                 dbList,
@@ -90,8 +89,8 @@ public class DataSyncManager {
         showToast("Experience synced.");
     }
 
-    public void syncProject(List<Project> uiList) {
-        List<Project> dbList = db.projectDao().getAllProjects();
+    public void syncProject(List<Project> uiList, int resumeId) {
+        List<Project> dbList = db.projectDao().getAllProjectsById(resumeId);
 
         SyncUtil.sync(
                 dbList,
@@ -119,8 +118,8 @@ public class DataSyncManager {
         );
         showToast("Projects synced.");
     }
-    public void syncSkill(List<Skill> uiList) {
-        List<Skill> dbList = db.skillsDao().getAllSkills();
+    public void syncSkill(List<Skill> uiList, int resumeId) {
+        List<Skill> dbList = db.skillsDao().getAllSkillsById(resumeId);
 
         SyncUtil.sync(
                 dbList,
@@ -146,8 +145,8 @@ public class DataSyncManager {
         showToast("Skills synced.");
     }
 
-    public void syncCertifications(List<Certification> uiList) {
-        List<Certification> dbList = db.certificationDao().getAllCertifications();
+    public void syncCertifications(List<Certification> uiList, int resumeId) {
+        List<Certification> dbList = db.certificationDao().getAllCertificationsById(resumeId);
 
         SyncUtil.sync(
                 dbList,
