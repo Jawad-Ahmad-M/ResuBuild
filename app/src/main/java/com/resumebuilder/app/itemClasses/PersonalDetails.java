@@ -2,11 +2,22 @@ package com.resumebuilder.app.itemClasses;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "ResumeDetails")
+@Entity(tableName = "ResumeDetails",
+        foreignKeys = @ForeignKey(
+                entity = Resume.class,
+                parentColumns = "resumeId",
+                childColumns = "resumeId",
+                onDelete = ForeignKey.CASCADE
+        ),
+        indices = {@Index("resumeId")}
+)
 public class PersonalDetails {
     @PrimaryKey(autoGenerate = true)
+    private int id;
     private int resumeId;
     private String name, location, personalEmail, phoneNumber, linkedInLink, githubLink;
     private String summary;
@@ -14,6 +25,13 @@ public class PersonalDetails {
     public PersonalDetails() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getResumeId() {
         return resumeId;

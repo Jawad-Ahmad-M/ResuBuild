@@ -10,7 +10,7 @@ import java.time.YearMonth;
 @Entity(
         tableName = "Project",
         foreignKeys = @ForeignKey(
-                entity = PersonalDetails.class,
+                entity = Resume.class,
                 parentColumns = "resumeId",
                 childColumns = "resumeId",
                 onDelete = ForeignKey.CASCADE

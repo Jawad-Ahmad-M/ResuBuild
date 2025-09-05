@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 @Entity(
         tableName = "Certification",
         foreignKeys = @ForeignKey(
-                entity = PersonalDetails.class,
+                entity = Resume.class,
                 parentColumns = "resumeId",
                 childColumns = "resumeId",
                 onDelete = ForeignKey.CASCADE

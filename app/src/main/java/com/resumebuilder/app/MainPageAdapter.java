@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.resumebuilder.app.fragments.DashboardFragment;
 import com.resumebuilder.app.fragments.atsScoreFragment;
-import com.resumebuilder.app.fragments.detailsFragment;
-import com.resumebuilder.app.fragments.pdfViewFragment;
+import com.resumebuilder.app.fragments.DetailsFragment;
 import com.resumebuilder.app.fragments.profileFragment;
 
 public class MainPageAdapter extends FragmentStateAdapter {
@@ -24,10 +24,10 @@ public class MainPageAdapter extends FragmentStateAdapter {
         if (fragmentCache[position] == null) {
             switch (position) {
                 case 0:
-                    fragmentCache[0] = new detailsFragment();
+                    fragmentCache[0] = new DetailsFragment();
                     break;
                 case 1:
-                    fragmentCache[1] = new pdfViewFragment();
+                    fragmentCache[1] = new DashboardFragment();
                     break;
                 case 2:
                     fragmentCache[2] = new atsScoreFragment();
@@ -45,8 +45,4 @@ public class MainPageAdapter extends FragmentStateAdapter {
         return 4;
     }
 
-    // Optional: expose fragment cache if needed
-//    public Fragment getCachedFragment(int position) {
-//        return fragmentCache[position];
-//    }
 }

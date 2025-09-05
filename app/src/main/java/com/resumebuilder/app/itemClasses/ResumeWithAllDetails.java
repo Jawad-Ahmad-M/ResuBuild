@@ -8,7 +8,6 @@ import java.util.List;
 public class ResumeWithAllDetails {
     @Embedded
     public PersonalDetails personalDetails;
-
     @Relation(
             parentColumn = "resumeId",
             entityColumn = "resumeId"

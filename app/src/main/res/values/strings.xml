@@ -58,4 +58,8 @@
     <string name="link_to_certificate">Link to Certificate\n</string>
     <string name="add_bullet">Add Bullet</string>
     <string name="bullet_s_description">Bullet\'s Description</string>
+    <string name="add_resume">Add Resume</string>
+    <string name="resubuild">ResuBuild</string>
+    <string name="resume_title">Resume Title</string>
+    <string name="timestamp">TimeStamp</string>
 </resources>

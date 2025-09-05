@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class detailsFragment extends Fragment {
+public class DetailsFragment extends Fragment {
     private final String DEBUG_TAG = "Room DB Services";
 
     private AppDatabase db;
@@ -65,7 +65,7 @@ public class detailsFragment extends Fragment {
     private SkillAdapter skillAdapter;
     private CertificationAdapter certificationAdapter;
 
-    public detailsFragment() {
+    public DetailsFragment() {
         // Required empty public constructor
     }
 
@@ -89,27 +89,27 @@ public class detailsFragment extends Fragment {
         db = AppDatabase.getInstance(requireContext().getApplicationContext());
         dataSyncManager = new DataSyncManager(requireContext().getApplicationContext());
 
-        executorService.execute(()->{
-            List<PersonalDetails> personalDetailsList = db.personalDetailsDao().getAllPersonalDetails();
-            if (personalDetailsList != null && !personalDetailsList.isEmpty()) {
-                details = personalDetailsList.get(0);
-            } else {
-                details = new PersonalDetails();
-                long id = db.personalDetailsDao().insertPersonalDetails(details);
-                details.setResumeId((int) id);
-            }
-            Log.d(DEBUG_TAG, details.toString());
-            requireActivity().runOnUiThread(() -> {
-                binding.etName.setText(details.getName() != null ? details.getName() : "");
-                binding.etLocation.setText(details.getLocation() != null ? details.getLocation() : "");
-                binding.etContact.setText(details.getPhoneNumber() != null ? details.getPhoneNumber() : "");
-                binding.etEmail.setText(details.getPersonalEmail() != null ? details.getPersonalEmail() : "");
-                binding.etSummary.setText(details.getSummary() != null ? details.getSummary() : "");
-                binding.etLinkedin.setText(details.getLinkedInLink() != null ? details.getLinkedInLink() : "");
-                binding.etGithub.setText(details.getGithubLink() != null ? details.getGithubLink() : "");
-                currentResumeId = details.getResumeId();
-            });
-        });
+//        executorService.execute(()->{
+//            List<PersonalDetails> personalDetailsList = db.personalDetailsDao().getAllPersonalDetails();
+//            if (personalDetailsList != null && !personalDetailsList.isEmpty()) {
+//                details = personalDetailsList.get(0);
+//            } else {
+//                details = new PersonalDetails();
+//                long id = db.personalDetailsDao().insertPersonalDetails(details);
+//                details.setResumeId((int) id);
+//            }
+//            Log.d(DEBUG_TAG, details.toString());
+//            requireActivity().runOnUiThread(() -> {
+//                binding.etName.setText(details.getName() != null ? details.getName() : "");
+//                binding.etLocation.setText(details.getLocation() != null ? details.getLocation() : "");
+//                binding.etContact.setText(details.getPhoneNumber() != null ? details.getPhoneNumber() : "");
+//                binding.etEmail.setText(details.getPersonalEmail() != null ? details.getPersonalEmail() : "");
+//                binding.etSummary.setText(details.getSummary() != null ? details.getSummary() : "");
+//                binding.etLinkedin.setText(details.getLinkedInLink() != null ? details.getLinkedInLink() : "");
+//                binding.etGithub.setText(details.getGithubLink() != null ? details.getGithubLink() : "");
+//                currentResumeId = details.getResumeId();
+//            });
+//        });
 
 
 
@@ -217,31 +217,31 @@ public class detailsFragment extends Fragment {
     private void loadingDataFromDB() {
         executorService.execute(() -> {
 //            db.educationDao().insertEducation(new Education("ABC", "abc","XYZ","Jul 2028","Jun 2027"));
-            List<Education> list = db.educationDao().getAllEducation();
+            List<Education> list = db.educationDao().getAllEducationById(currentResumeId);
             educationList.addAll(list);
             Log.d(DEBUG_TAG, educationList.toString());
         });
 
         executorService.execute(()->{
-            List<Experience> list = db.experienceDao().getAllExperience();
+            List<Experience> list = db.experienceDao().getAllExperienceById(currentResumeId);
             experienceList.addAll(list);
             Log.d(DEBUG_TAG, experienceList.toString());
         });
 
         executorService.execute(()->{
-            List<Project> list = db.projectDao().getAllProjects();
+            List<Project> list = db.projectDao().getAllProjectsById(currentResumeId);
             projectList.addAll(list);
             Log.d(DEBUG_TAG, projectList.toString());
         });
 
         executorService.execute(()->{
-            List<Skill> list = db.skillsDao().getAllSkills();
+            List<Skill> list = db.skillsDao().getAllSkillsById(currentResumeId);
             skillList.addAll(list);
             Log.d(DEBUG_TAG, skillList.toString());
         });
 
         executorService.execute(()->{
-            List<Certification> list = db.certificationDao().getAllCertifications();
+            List<Certification> list = db.certificationDao().getAllCertificationsById(currentResumeId);
             certificationList.addAll(list);
             Log.d(DEBUG_TAG, certificationList.toString());
         });
@@ -266,11 +266,11 @@ public class detailsFragment extends Fragment {
             db.runInTransaction(() -> {
                 db.personalDetailsDao().insertOrUpdate(details);
 
-                dataSyncManager.syncEducation(educationList);
-                dataSyncManager.syncExperience(experienceList);
-                dataSyncManager.syncProject(projectList);
-                dataSyncManager.syncSkill(skillList);
-                dataSyncManager.syncCertifications(certificationList);
+                dataSyncManager.syncEducation(educationList,currentResumeId);
+                dataSyncManager.syncExperience(experienceList,currentResumeId);
+                dataSyncManager.syncProject(projectList,currentResumeId);
+                dataSyncManager.syncSkill(skillList,currentResumeId);
+                dataSyncManager.syncCertifications(certificationList,currentResumeId);
             });
 
             Log.d(DEBUG_TAG, "All Entries Added");
